@@ -12,6 +12,9 @@ module Griddler
 
       def normalize_params
         events.map do |event|
+          puts "........wait..............."
+          puts event
+          puts event[:email]
           {
             to: recipients(:to, event),
             cc: recipients(:cc, event),
