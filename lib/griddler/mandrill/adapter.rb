@@ -13,7 +13,7 @@ module Griddler
       def normalize_params
         events.map do |event|
           {
-            to: recipients(:to, event),
+            to: event[:email],
             cc: recipients(:cc, event),
             from: full_email([ event[:from_email], event[:from_name] ]),
             subject: event[:subject],
