@@ -12,9 +12,6 @@ module Griddler
 
       def normalize_params
         events.map do |event|
-          puts "........wait..............."
-          puts event
-          puts event[:email]
           {
             to: recipients(:to, event),
             cc: recipients(:cc, event),
@@ -23,7 +20,8 @@ module Griddler
             text: event.fetch(:text, ''),
             html: event.fetch(:html, ''),
             raw_body: event[:raw_msg],
-            attachments: attachment_files(event)
+            attachments: attachment_files(event),
+            email_receiver: event[:email]
           }
         end
       end
