@@ -13,7 +13,7 @@ module Griddler
       def normalize_params
         events.map do |event|
           {
-            to: event[:email],
+            to: recipients(:to, event),
             cc: recipients(:cc, event),
             from: full_email([ event[:from_email], event[:from_name] ]),
             subject: event[:subject],
@@ -37,7 +37,13 @@ module Griddler
       end
 
       def recipients(field, event)
-        Array.wrap(event[field]).map { |recipient| full_email(recipient) }
+        Array.wrap(event[field]).map do |recipient| 
+          if field == "to".to_sym
+            event[:email]
+          else
+            full_email(recipient)
+          end
+        end
       end
 
       def full_email(contact_info)
